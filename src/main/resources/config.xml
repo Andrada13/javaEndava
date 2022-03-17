@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="api.Controller">
+        <property name="helloService" ref="helloService"></property>
+        <property name="fitnessDao" ref="fitnessDao"></property>
+    </bean>
+
+    <bean id="helloService" class="services.HelloService"></bean>
+
+    <bean id="fitnessDao" class="dao.FitnessDao" autowire="byType">
+        <property name="searchCoursesSql">
+            <value>
+                <![CDATA[
+                    select course_id,name,description,price
+                    from course
+                    where description like :description and price>:priceLimit
+                 ]]>
+            </value>
+        </property>
+        <property name="searchTrainersSql">
+            <value>
+                <![CDATA[
+                    select t.name as trainer_name,
+                           t.email,
+                           c.name as course_name,
+                           c.description
+                    from trainer t
+                    join course c on t.course_id=c.course_id
+                    where c.price>:priceLimit
+                 ]]>
+            </value>
+        </property>
+        <property name="searchCoursesWithTimeScheduleSql">
+            <value>
+                <![CDATA[
+                  select c.name,
+                         c.description,
+                         t.schedule_time
+                  from course c
+                  join time_schedule t on c.course_id = t.course_id
+                  where t.schedule_time like :scheduleTime
+                 ]]>
+            </value>
+        </property>
+        <property name="searchUsersSql">
+            <value>
+                <![CDATA[
+                  select name,
+                         email,
+                         address
+                  from users
+                  where name like :name
+                 ]]>
+            </value>
+        </property>
+        <property name="insertTrainerSql">
+            <value>
+                <![CDATA[
+                insert into
+                trainer (trainer_id, course_id, name, email)
+                values (:trainerId, :courseId, :name, :email)
+                 ]]>
+            </value>
+        </property>
+        <property name="updateCourseSql">
+            <value>
+                <![CDATA[
+                 update course
+                 set description = :description
+                 where price >:price
+                 ]]>
+            </value>
+        </property>
+
+    </bean>
+
+</beans>
