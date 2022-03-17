@@ -61,6 +61,7 @@ public class Controller {
 
     }
 
+    // what if we make this point receive a Trainer object?
     @PostMapping("/trainer")
     public int insertTrainer(@RequestParam Integer trainerId, @RequestParam Integer courseId,@RequestParam String name,
                              @RequestParam String email) throws SQLException {
