@@ -75,6 +75,19 @@
             </value>
         </property>
 
+        <property name="insertNewTrainerSql">
+            <value>
+                <![CDATA[
+                 insert into trainer
+                 (course_id, name, email)
+                 values (:courseId,:name, :email)
+                 ]]>
+            </value>
+        </property>
+
+
+
+
     </bean>
 
 </beans>

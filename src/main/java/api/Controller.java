@@ -1,10 +1,7 @@
 package api;
 
 import dao.FitnessDao;
-import model.Course;
-import model.CourseWithTimeSchedule;
-import model.TrainerWithCourseDescription;
-import model.User;
+import model.*;
 import org.springframework.web.bind.annotation.*;
 import services.HelloService;
 
@@ -61,13 +58,23 @@ public class Controller {
 
     }
 
-    // what if we make this point receive a Trainer object?
+
+
     @PostMapping("/trainer")
     public int insertTrainer(@RequestParam Integer trainerId, @RequestParam Integer courseId,@RequestParam String name,
                              @RequestParam String email) throws SQLException {
 
 
         return fitnessDao.createTrainer(trainerId,courseId,name,email);
+
+    }
+
+    // what if we make this point receive a Trainer object?
+    @PostMapping(path = "/newTrainer", consumes="application/json")
+    public int insertTrainerWithBody(@RequestBody Trainer trainer) throws SQLException {
+
+
+        return fitnessDao.createTrainerWithBody(trainer);
 
     }
 

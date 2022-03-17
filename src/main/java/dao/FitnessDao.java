@@ -19,6 +19,8 @@ public class FitnessDao {
     String searchUsersSql;
     String insertTrainerSql;
     String updateCourseSql;
+    String insertNewTrainerSql;
+
 
     public void setDataSource(DataSource dataSource){
         jdbcTemplate = new NamedParameterJdbcTemplate(dataSource);
@@ -44,6 +46,12 @@ public class FitnessDao {
         this.updateCourseSql = updateCourseSql;
     }
 
+    public void setInsertNewTrainerSql(String insertNewTrainerSql){
+        this.insertNewTrainerSql = insertNewTrainerSql;
+    }
+
+
+
     //@Transactional
     public int createTrainer(Integer trainerId, Integer courseId, String name, String email){
 
@@ -54,6 +62,27 @@ public class FitnessDao {
         map.put("email",email);
 
         int rowNumber = jdbcTemplate.update(insertTrainerSql,map);
+
+        return rowNumber;
+
+    }
+
+
+
+    public int createTrainerWithBody(Trainer trainer) throws SQLException {
+
+        Map<String,Object> map = new HashMap<>();
+
+
+        Integer courseId = trainer.getCourseId();
+        String trainerName = trainer.getName();
+        String email = trainer.getEmail();
+
+        map.put("courseId",courseId);
+        map.put("name",trainerName);
+        map.put("email",email);
+
+        int rowNumber = jdbcTemplate.update(insertNewTrainerSql,map);
 
         return rowNumber;
 
@@ -93,6 +122,8 @@ public class FitnessDao {
         );
         return courses;
     }
+
+
 
     public List<TrainerWithCourseDescription> retrieveTrainers(int givenPrice) throws SQLException {
         //DataSource dataSource = new DriverManagerDataSource("jdbc:mysql://localhost/database_service","root","Vampir1234");

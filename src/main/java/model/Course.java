@@ -13,7 +13,9 @@ public class Course {
         this.description = description;
         this.price = price;
     }
+public Course(){
 
+}
     public Course(String name, String description) {
         this.name = name;
         this.description = description;
