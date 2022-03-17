@@ -78,6 +78,8 @@ public class Controller {
 
     }
 
+
+
     @PutMapping("/course")
     public int updateCourse(@RequestParam String description, @RequestParam Integer price) throws SQLException {
 
