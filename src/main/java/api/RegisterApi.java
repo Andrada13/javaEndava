@@ -1,6 +1,5 @@
 package api;
 
-import dao.RegistrationDao;
 import model.Registration;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +11,7 @@ import java.sql.SQLException;
 
 @ResponseBody
 @RequestMapping("/")
-public class Register {
+public class RegisterApi {
 
     RegistrationService registrationService;
 
