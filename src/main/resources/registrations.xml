@@ -23,4 +23,9 @@
 
     </bean>
 
+
+    <bean class="api.ValidatingRegisterApi">
+    </bean>
+
+
 </beans>
