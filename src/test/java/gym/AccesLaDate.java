@@ -1,5 +1,7 @@
 package gym;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,6 +25,8 @@ public class AccesLaDate {
         String name = resultSet.getString("name");
 
         System.out.println(name);
+
+        Assertions.assertEquals("Gica",name);
 
     }
 
@@ -100,6 +104,7 @@ public class AccesLaDate {
 
     @Test
     public void readUsingJdbcTemplateRowMapper() throws SQLException {
+
         DataSource dataSource = new DriverManagerDataSource("jdbc:mysql://localhost/database_service", "root", "Vampir1234");
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
@@ -126,7 +131,7 @@ public class AccesLaDate {
         //  PreparedStatement statement = connection.prepareStatement(sqlWithParam);
         //   statement.setString(1,"George");
 
-        String[] parameters = {"George"};
+        String[] parameters={"George"};
         int[] parameterTypes = {Types.VARCHAR};
         List<Trainer> addresses = jdbcTemplate.query(sqlWithParam, parameters, parameterTypes,
 

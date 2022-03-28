@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="api.PaymentApi">
+        <property name="paymentService" ref="paymentService"/>
+    </bean>
+
+    <bean id = "paymentService" class="services.PaymentService">
+        <property name="paymentDao" ref="paymentDao"/>
+
+
+    </bean>
+
+    <bean id = "rabbitMessagePayment" class="model.RabbitMessagePayment">
+    </bean>
+
+    <bean id = "rabbitMessenger" class="services.RabbitMessenger">
+    </bean>
+
+    <bean id = "rabbitPayment" class="services.RabbitPayment">
+        <property name="paymentService" ref="paymentService"></property>
+        <property name="registrationService" ref="registrationService"></property>
+
+    </bean>
+
+    <bean id="paymentDao" class="dao.PaymentDao" autowire="byType">
+        <property name="insertPaymentSql">
+            <value>
+                <![CDATA[
+                   insert into payment (payment_timestamp, user_id, orgaccno, benaccno, amount_settlement, course_name)
+                   values(:paymentTimestamp, :userId, :orgaccno, :benaccno, :amountSettlement, :courseName)
+                 ]]>
+            </value>
+        </property>
+
+        <property name="countUserIdSql">
+            <value>
+                <![CDATA[
+                   select count(user_id) from users where user_id = :userId;
+                 ]]>
+            </value>
+        </property>
+
+        <property name="coursesNameSql">
+            <value>
+                <![CDATA[
+                   select name from course where name=:name;
+                 ]]>
+            </value>
+        </property>
+
+        <property name="insertErronatedPaymentsSql">
+            <value>
+                <![CDATA[
+                   insert into erronated_payments(payload, error_cause) values (:payload, :errorCause)
+                 ]]>
+            </value>
+        </property>
+
+    </bean>
+
+</beans>

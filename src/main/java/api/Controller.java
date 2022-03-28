@@ -5,6 +5,7 @@ import model.*;
 import org.springframework.web.bind.annotation.*;
 import services.HelloService;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -87,4 +88,6 @@ public class Controller {
         return fitnessDao.updateCourse(description,price);
 
     }
+
+
 }

@@ -5,10 +5,30 @@
 
     <bean class="api.RegisterApi">
         <property name="registrationService" ref="registrationService"></property>
+        <property name="registrationDao" ref="registrationDao"></property>
+        <property name="registerCallBackHandlerDao" ref="registerCallBackHandlerDao"></property>
     </bean>
 
     <bean id = "registrationService" class="services.RegistrationService">
         <property name="registrationDao" ref="registrationDao"></property>
+    </bean>
+
+    <bean class="api.ValidatingRegisterApi">
+    </bean>
+
+    <bean id="registerCallBackHandlerDao" class="dao.RegisterCallBackHandlerDao" autowire="byType">
+        <property name="selectDatetimeRegistrationsSql">
+            <value>
+                <![CDATA[
+                    select registration_id, u.name user_name, t.name trainer_name, c.name course_name, registration_datetime
+                    from registration r
+                    join users u on u.user_id =  r.user_id
+                    join trainer t on t.trainer_id = r.trainer_id
+                    join course c on t.course_id = c.course_id
+                    where registration_datetime between :startTime and :endTime
+                 ]]>
+            </value>
+        </property>
     </bean>
 
     <bean id="registrationDao" class="dao.RegistrationDao" autowire="byType">
@@ -20,6 +40,45 @@
                  ]]>
             </value>
         </property>
+
+        <property name="countUserIdSql">
+            <value>
+                <![CDATA[
+                   select count(user_id) from users where user_id = :userId;
+                 ]]>
+            </value>
+        </property>
+
+        <property name="countTrainerIdSql">
+            <value>
+                <![CDATA[
+                   select count(trainer_id) from trainer where trainer_id = :trainerId
+                 ]]>
+            </value>
+        </property>
+
+
+        <property name="selectRegistrationsSql">
+            <value>
+                <![CDATA[
+                    select registration_id, user_id, trainer_id, registration_datetime from registration;
+                 ]]>
+            </value>
+        </property>
+
+        <property name="selectDatetimeRegistrationsSql">
+            <value>
+                <![CDATA[
+                    select registration_id, u.name user_name, t.name trainer_name, c.name course_name, registration_datetime
+                    from registration r
+                    join users u on u.user_id =  r.user_id
+                    join trainer t on t.trainer_id = r.trainer_id
+                    join course c on t.course_id = c.course_id
+                    where registration_datetime between :startTime and :endTime
+                 ]]>
+            </value>
+        </property>
+
 
     </bean>
 

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
 @ComponentScan("api")
-@ImportResource({"classpath*:config.xml","classpath*:registrations.xml"})
+@ImportResource({"classpath*:config.xml","classpath*:registrations.xml","classpath*:payment.xml"})
 public class Main {
     public static void main(String[] args) {
         SpringApplication.run(Main.class,args);

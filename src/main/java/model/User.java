@@ -11,6 +11,12 @@ public class User {
         this.address = address;
     }
 
+    public User(String name) {
+        this.name = name;
+
+    }
+
+
     public String getName() {
         return name;
     }

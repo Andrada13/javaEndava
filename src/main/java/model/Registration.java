@@ -18,6 +18,16 @@ public class Registration {
         this.trainerId = trainerId;
         this.timestamp = timestamp;
     }
+    public Registration(Integer registrationId, Timestamp timestamp) {
+        this.registrationId = registrationId;
+        this.timestamp = timestamp;
+    }
+
+    public Registration(Integer userId, Integer trainerId, Timestamp timestamp) {
+        this.userId = userId;
+        this.trainerId = trainerId;
+        this.timestamp = timestamp;
+    }
 
     public Registration(){
 
@@ -56,11 +66,7 @@ public class Registration {
 
     @Override
     public String toString() {
-        return "Registration{" +
-                "registrationId=" + registrationId +
-                ", userId=" + userId +
-                ", trainerId=" + trainerId +
-                ", timestamp=" + timestamp +
-                '}';
+        return registrationId+","+"\t \t"+ userId+","+"\t \t"+trainerId+","+"\t \t"+timestamp;
+
     }
 }

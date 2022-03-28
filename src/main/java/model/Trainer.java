@@ -12,6 +12,11 @@ public class Trainer {
         this.courseId = courseId;
     }
 
+    public Trainer(String name) {
+        this.name = name;
+
+    }
+
     public Trainer(){
 
     }

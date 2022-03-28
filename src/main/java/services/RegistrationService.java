@@ -1,10 +1,10 @@
 package services;
 
 import dao.RegistrationDao;
-import model.HelloWorld;
-import model.Registration;
 
-import java.sql.SQLException;
+import exceptions.DataNotFoundException;
+import model.RabbitMessageRegistration;
+import model.Registration;
 
 public class RegistrationService {
 
@@ -14,9 +14,17 @@ public class RegistrationService {
         this.registrationDao = registrationDao;
     }
 
-    public int createNewRegistration(Registration registration) throws SQLException {
+    public void createNewRegistration(Registration registration) {
 
-       return registrationDao.createRegistration(registration);
+        if(registrationDao.validateUserId(registration.getUserId())==0) {
+            throw new DataNotFoundException("User with id " + registration.getUserId() + " was not found");
+        }else if(registrationDao.validateTrainerId(registration.getTrainerId())==0) {
+            throw new DataNotFoundException("Trainer with id " + registration.getTrainerId() + " was not found");
+        }else{
+                registrationDao.createRegistration(registration);
+               // RabbitMessageRegistration rabbitMessage = new RabbitMessageRegistration("registration",registration);
+               // RabbitMessenger.messagePublisher(rabbitMessage);
+        }
 
     }
 }
